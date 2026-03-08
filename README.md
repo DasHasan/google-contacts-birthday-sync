@@ -1,45 +1,35 @@
-# birthday-calendar-sync
+# google-contacts-birthday-sync
 
-A Google Apps Script that reads all your Google Contacts and their birthdays and creates recurring annual all-day events in Google Calendar.
+Ein Google Apps Script, das alle Geburtstage aus Google Kontakte ausliest und als jahrlich wiederkehrende Ganztagesereignisse im Google Kalender anlegt.
 
-Sister project of [contacts-birthday-sheet](https://github.com/DasHasan/contacts-birthday-sheet), which writes birthdays to a Google Sheet instead.
+Schwesterprojekt von [contacts-birthday-sheet](https://github.com/DasHasan/contacts-birthday-sheet), das Geburtstage stattdessen in eine Google Tabelle schreibt.
 
-## Features
+## Funktionen
 
-- Pulls all contacts with birthdays from Google Contacts via the People API
-- Uses the "Speichern unter" (File as) name when set, otherwise falls back to the display name
-- Creates all-day recurring annual events titled **"[Name]'s Birthday"**
-- Skips contacts that already have an event — safe to run multiple times
-- Writes events to a dedicated **Birthdays** calendar (created automatically if it doesn't exist)
-- Each event description contains a sync tag (`[birthday-sync:resourceName]`) used for duplicate detection
+- Liest alle Kontakte mit Geburtstag uber die People API
+- Verwendet den "Speichern unter"-Namen, falls gesetzt, sonst den Anzeigenamen
+- Loscht vor jedem Sync alle vorhandenen Geburtstagsereignisse und erstellt sie neu
+- Legt Ganztagesereignisse mit dem Titel **"[Name] Geburtstag"** an
+- Ereignisse werden direkt im primaren Kalender mit dem Typ `birthday` gespeichert
+- Erinnerungen werden gemas den Standardeinstellungen des Kalenders gesetzt
 
-## Setup
+## Einrichtung
 
-1. Open [Google Sheets](https://sheets.google.com) and create a new spreadsheet (needed to run Apps Script)
-2. Go to **Extensions → Apps Script**
-3. Delete the default code and paste the contents of `birthday_to_calendar.gs`
-4. Click **Save**
-5. Enable the People API: click **Services** (+ icon) → find **Google People API** → **Add**
-6. Select `syncBirthdaysToCalendar` from the function dropdown and click **Run**
-7. Grant the requested permissions when prompted (needs access to Contacts and Calendar)
+1. [script.google.com](https://script.google.com) offnen und ein neues Projekt erstellen
+2. Den Standardcode loschen und den Inhalt von `birthday_to_calendar.gs` einfugen
+3. `appsscript.json` uber **Projekteinstellungen -> "appsscript.json"-Manifestdatei im Editor anzeigen"** offnen und den Inhalt der mitgelieferten `appsscript.json` einfugen
+4. Funktion `syncBirthdaysToCalendar` im Dropdown auswahlen und auf **Ausfuhren** klicken
+5. Die angeforderten Berechtigungen bestatigen (Zugriff auf Kontakte und Kalender)
 
-## Configuration
+## Funktionsubersicht
 
-At the top of the script:
-
-```js
-const CALENDAR_NAME = "Birthdays"; // Set to null to use your default calendar
-```
-
-## Functions
-
-| Function | Description |
+| Funktion | Beschreibung |
 |---|---|
-| `syncBirthdaysToCalendar` | Main function — fetches contacts and creates calendar events |
-| `debugNameFields` | Logs raw API data for the first 20 contacts to inspect name fields |
+| `syncBirthdaysToCalendar` | Hauptfunktion - loscht alle Geburtstagsereignisse und erstellt sie neu |
+| `deletePrimaryBirthdayEvents` | Loscht alle Geburtstagsereignisse aus dem primaren Kalender |
 
-## Notes
+## Hinweise
 
-- If a birthday has no year set in Contacts, the event is still created (just without the birth year in the description)
-- If a birthday has already passed this year, the first event occurrence is placed next year
-- Re-running the script is safe — existing events are detected via the description tag and skipped
+- Geburtstage ohne Jahr werden trotzdem angelegt
+- Bei jedem Ausfuhren werden alle Ereignisse geloscht und neu erstellt, um Umbenennung von Kontakten korrekt zu behandeln
+- Die Zeitzone ist auf `Europe/Berlin` eingestellt und kann in der `appsscript.json` angepasst werden
