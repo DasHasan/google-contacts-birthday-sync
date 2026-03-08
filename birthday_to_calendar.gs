@@ -111,7 +111,13 @@ function createBirthdayEvent(contact) {
     recurrence: [rrule],
     transparency: "transparent",
     visibility: "private",
-    reminders: { useDefault: true },
+    reminders: {
+      useDefault: false,
+      overrides: [
+        { method: "popup", minutes: 60 * 24 },     // 1 day before
+        { method: "popup", minutes: 60 * 24 * 7 }, // 1 week before
+      ],
+    },
   }, "primary");
 }
 
