@@ -13,6 +13,10 @@ Schwesterprojekt von [contacts-birthday-sheet](https://github.com/DasHasan/conta
 - Ereignisse werden direkt im primaren Kalender mit dem Typ `birthday` gespeichert
 - Erinnerungen werden gemas den Standardeinstellungen des Kalenders gesetzt
 
+## Projekt-URL
+
+[https://script.google.com/home/projects/1yt7SuZpmdt0qBp52wuB2zvJ15HiAReiocdqdtbbP2lhEkalrcmrJRibJ/edit](https://script.google.com/home/projects/1yt7SuZpmdt0qBp52wuB2zvJ15HiAReiocdqdtbbP2lhEkalrcmrJRibJ/edit)
+
 ## Einrichtung
 
 1. [script.google.com](https://script.google.com) offnen und ein neues Projekt erstellen

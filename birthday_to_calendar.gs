@@ -114,6 +114,7 @@ function createBirthdayEvent(contact) {
     reminders: {
       useDefault: false,
       overrides: [
+        { method: "popup", minutes: 0 },           // same day
         { method: "popup", minutes: 60 * 24 },     // 1 day before
         { method: "popup", minutes: 60 * 24 * 7 }, // 1 week before
       ],
